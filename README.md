@@ -2,7 +2,7 @@
 
 # What is this?
 ![freecodingtools.org obfuscated script sample](./.assets/sample.png)
-A shell script for deobfuscate obfuscated python script by [freecodingtools.org](https://freecodingtools.org/py-obfuscator). even the website says _'this method makes it difficult for hackers to gain access to your sensitive source code.'_, a random 15yo just casually cracked this open like it was nothing.
+A shell script for deobfuscate obfuscated python script by [freecodingtools.org](https://freecodingtools.org/py-obfuscator). even the website says _'this method makes it difficult for hackers to gain access to your sensitive source code. This Python obfuscator is highly advanced, using multi-layer obfuscation to make it effectively impossible to recover the original source code.'_, a random 15yo just casually cracked this open like it was nothing.
 
 ## How this work?
 ```yaml
