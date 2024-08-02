@@ -4,7 +4,7 @@ python 1.tmp >2.tmp
 layer=1
 
 while true; do
-	if cat 2.tmp | grep exec >/dev/null; then
+	if cat 2.tmp | grep "exec((_)" >/dev/null; then
 		enc="$(sed -E "s/.*'(.*)'.*/\1/" 2.tmp)"
 		echo "_ = lambda __ : __import__('zlib').decompress(__import__('base64').b64decode(__[::-1]));print((_)(b'$enc'))" >2.tmp
 		enc2="$(python 2.tmp)"
