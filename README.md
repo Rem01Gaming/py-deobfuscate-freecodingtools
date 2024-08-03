@@ -13,8 +13,13 @@ A shell script for deobfuscate obfuscated python script by [freecodingtools.org]
 5. Loop from step 2 until there's no string 'exec' on temp file
 ```
 
-## Usage
+## Installation and Usage
 ```shell
+# Install dependencies
+apt update -y && apt upgrade -y
+apt install python2
+
+# Deobfuscate
 bash py-deobfuscate.sh example.py
 ```
 
