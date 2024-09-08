@@ -17,10 +17,11 @@ A shell script for deobfuscate obfuscated python script by [freecodingtools.org]
 ```shell
 # Install dependencies
 apt update -y && apt upgrade -y
-apt install python2
+apt install python2 && apt install python3
 
 # Deobfuscate
 bash py-deobfuscate.sh example.py
+python3 py-deobfuscate example.py
 ```
 
 ## Oh no, i used this web for obfs my secret script 😭
