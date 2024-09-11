@@ -8,10 +8,6 @@ def check_python() -> bool:
     except (subprocess.CalledProcessError, FileNotFoundError):
         return False
 
-def file_exists(filepath: str) -> bool:
-    """Check if the specified file exists."""
-    return os.path.isfile(filepath)
-
 def python_exec(script_path: str) -> str:
     """Run a Python 2 script and capture its output."""
     try:
@@ -24,16 +20,19 @@ def python_exec(script_path: str) -> str:
         sys.exit(1)
 
 def replace_exec(content: str) -> str:
-    """Replace 'exec' with 'print' in the script content."""
+    """
+    Replace 'exec' with 'print' in the script content."""
+    if 'exec' not in content:
+        print("Error: 'exec' not found in the script content.", file=sys.stderr)
+        sys.exit(1)
     return content.replace('exec', 'print')
 
-def deobfuscate_layer(content: str, enc: str) -> str:
-    """Deobfuscate a single layer by decoding base64 and decompressing with zlib."""
-    new_script = (
+def deobfuscate_layer(enc: str) -> str:
+    """Writing a new script for deobfuscate a single layer by decoding base64 and decompressing with zlib."""
+    return (
         "_ = lambda __ : __import__('zlib').decompress(__import__('base64').b64decode(__[::-1]));"
         "print((_)(b'{0}'))".format(enc)
     )
-    return new_script
 
 def deobfuscate_script(filepath: str) -> None:
     """Main function to handle deobfuscation of a script."""
@@ -59,8 +58,7 @@ def deobfuscate_script(filepath: str) -> None:
             content = f.read()
 
         if 'exec((_)' in content:
-            enc = content.split("'")[1]
-            new_script = deobfuscate_layer(content, enc)
+            new_script = deobfuscate_layer(content.split("'")[1])
 
             with open(temp_file_2, 'w') as f:
                 f.write(new_script)
@@ -69,8 +67,7 @@ def deobfuscate_script(filepath: str) -> None:
             with open(temp_file_2, 'w') as f:
                 f.write(result)
 
-            sys.stdout.write(f"Deobfuscating layer {layer}...\r")
-            sys.stdout.flush()
+            print(f"Deobfuscating layer {layer}...", end="\r")
             layer += 1
         else:
             os.remove(temp_file_1)
@@ -90,7 +87,7 @@ def main() -> None:
         sys.exit(1)
 
     script_path: str = sys.argv[1]
-    if not file_exists(script_path):
+    if not os.path.isfile(script_path):
         print(f"Script {script_path} does not exist!", file=sys.stderr)
         sys.exit(1)
 
